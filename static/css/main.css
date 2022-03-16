@@ -1,0 +1,16 @@
+body{
+    align-items: center;
+    font-family: "Comic Sans MS";
+}
+
+th{
+    padding-left: 50px;
+    padding-right: 50px;
+}
+td{
+     padding-left: 50px;
+    padding-right: 50px;
+}
+input{
+    align-content: center;
+}
