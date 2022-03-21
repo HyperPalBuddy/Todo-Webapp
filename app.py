@@ -13,8 +13,17 @@ class ToDo(db.Model):
 
     def __repr__(self):
         return '<Task %r>' %self.id
+@app.route('/', methods=['GET', 'POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
+            error = 'Invalid Credentials. Please try again.'
+        else:
+            return redirect('/home')
+    return render_template('login.html', error=error)
 
-@app.route("/", methods=['POST', 'GET'])
+@app.route("/home", methods=['POST', 'GET'])
 def index():
     if request.method=='POST':
         task_content = request.form['content']
@@ -22,7 +31,7 @@ def index():
         try:
             db.session.add(new_task)
             db.session.commit()
-            return redirect('/')
+            return redirect('/home')
         except:
             return 'Error, Cant add task'
     else:
@@ -38,7 +47,7 @@ def delete(id):
     try:
         db.session.delete(del_task)
         db.session.commit()
-        return redirect('/')
+        return redirect('/home')
     except:
         return "Error"
 
@@ -51,7 +60,7 @@ def update(id):
         upt_task.content = request.form['content']
         try:
             db.session.commit()
-            return redirect("/")
+            return redirect("/home")
         except:
             return "Error"
     else:
